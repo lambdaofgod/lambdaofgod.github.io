@@ -121,7 +121,8 @@ function render()
         vec2( Math.cos(baseAngle), Math.sin(baseAngle)),
         vec2( Math.cos(2*baseAngle), Math.sin(2*baseAngle))
     ];
-    vertices = vertices.map( function(ar) {return ar.map(function(x) {return x * 0.5});});
+
+    vertices = vertices.map( function(ar) {return ar.map(function(x) {return x * 0.75});});
 
     points = [];
     tesselateTriangle( vertices[0], vertices[1], vertices[2],
