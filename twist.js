@@ -99,10 +99,11 @@ function tesselateTriangle( a, b, c, count )
 function twist(pt, ang) {
         var x = pt[0];
         var y = pt[1];
+        var scaling = 1.5;
         var r = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
-        var cosine = Math.cos(r*ang)
-        var sine = Math.sin(r*ang)
-        return vec2( x*cosine - y * sine,
+        var cosine = Math.cos(scaling*r*ang)
+        var sine = Math.sin(scaling*r*ang)
+        return vec2(x*cosine - y * sine,
                     x*sine + y*cosine);
 }
 
@@ -113,8 +114,7 @@ function defaultTwist(pt) {
 
 window.onload = init;
 
-function render()
-{
+function render() {
     var baseAngle = 2*Math.PI/3;
     var vertices = [
         vec2( 1, 0 ),
@@ -125,15 +125,18 @@ function render()
     vertices = vertices.map( function(ar) {return ar.map(function(x) {return x * 0.75});});
 
     points = [];
+    
+    // tesselation part
     tesselateTriangle( vertices[0], vertices[1], vertices[2],
                     _numTimesToSubdivide);
-
+    // twisting
     points = points.map(function (pt) 
             { return twist(pt,_angle); } 
              );
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
     gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    
     points = [];
     //requestAnimFrame(render);
 }
