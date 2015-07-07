@@ -3,7 +3,7 @@
 var canvas;
 var gl;
 
-var points = [];
+points = [];
 
 var _numTimesToSubdivide = 3;
 var _angle = 0;
