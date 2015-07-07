@@ -1,2 +1,1 @@
 # lambdaofgod.github.io
-
