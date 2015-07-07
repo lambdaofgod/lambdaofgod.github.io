@@ -5,7 +5,7 @@ var gl;
 
 var points = [];
 
-var _numTimesToSubdivide = 0;
+var _numTimesToSubdivide = 3;
 var _angle = 0;
 
 var bufferId;
@@ -115,11 +115,11 @@ window.onload = init;
 
 function render()
 {
-    var baseAngle = Math.PI/3;
+    var baseAngle = 2*Math.PI/3;
     var vertices = [
-        vec2( 0, 1 ),
-        vec2( Math.cos(4*baseAngle), Math.sin(4*baseAngle)),
-        vec2( Math.cos(6*baseAngle), Math.sin(6*baseAngle))
+        vec2( 1, 0 ),
+        vec2( Math.cos(baseAngle), Math.sin(baseAngle)),
+        vec2( Math.cos(2*baseAngle), Math.sin(2*baseAngle))
     ];
     vertices = vertices.map( function(ar) {return ar.map(function(x) {return x * 0.5});});
 
