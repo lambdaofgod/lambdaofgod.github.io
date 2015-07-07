@@ -3,7 +3,7 @@
 var canvas;
 var gl;
 
-points = [];
+var points = [];
 
 var _numTimesToSubdivide = 3;
 var _angle = 0;
@@ -127,7 +127,9 @@ function render()
     tesselateTriangle( vertices[0], vertices[1], vertices[2],
                     _numTimesToSubdivide);
 
-    points = points.map(function (pt) twist(pt,_angle));
+    points = points.map(function (pt) 
+            { return twist(pt,_angle); } 
+             );
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
     gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.TRIANGLES, 0, points.length );
