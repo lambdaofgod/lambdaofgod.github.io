@@ -5,7 +5,7 @@ var gl;
 
 var points = [];
 
-var _tesselationDepth = 9; //actually it's 8 
+var _tesselationDepth = 7; //actually it's 6
 var _numTimesToSubdivide = 0;
 var _angle = 0;
 
