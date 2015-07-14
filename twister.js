@@ -5,14 +5,13 @@ var gl;
 
 var points = [];
 
-var _tesselationDepth = 7; //actually it's 6
+var _tesselationDepth = 12; //actually it's 6
 var _numTimesToSubdivide = 0;
 var _angle = 0;
 
 var bufferId;
 
-function init()
-{
+function init() {
     canvas = document.getElementById( "gl-canvas" );
 
     gl = WebGLUtils.setupWebGL( canvas );
@@ -67,13 +66,11 @@ function init()
     render();
 };
 
-function triangle( a, b, c )
-{
+function triangle( a, b, c ) {
     points.push( a, b, c );
 }
 
-function tesselateTriangle( a, b, c, count )
-{
+function tesselateTriangle( a, b, c, count ) {
 
     // check for end of recursion
 
@@ -114,8 +111,7 @@ function defaultTwist(pt) {
 
 window.onload = init;
 
-function render()
-{
+function render() {
     var baseAngle = Math.PI/3;
     var vertices = [
         vec2( 0, 1 ),
