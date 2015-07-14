@@ -5,6 +5,7 @@ var gl;
 
 var points = [];
 
+var _tesselationDepth = 9; //actually it's 8 
 var _numTimesToSubdivide = 0;
 var _angle = 0;
 
@@ -39,7 +40,7 @@ function init()
 
     bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, Math.pow(4,8),gl.STATIC_DRAW );
+    gl.bufferData( gl.ARRAY_BUFFER, Math.pow(4,_tesselationDepth),gl.STATIC_DRAW );
     //8*Math.pow(3, 6),
 
 
