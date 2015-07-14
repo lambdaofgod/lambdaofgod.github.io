@@ -5,7 +5,7 @@ var gl;
 
 var points = [];
 
-var _numTimesToSubdivide = 3;
+var _numTimesToSubdivide = 0;
 var _angle = 0;
 
 var bufferId;
@@ -39,7 +39,8 @@ function init()
 
     bufferId = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
-    gl.bufferData( gl.ARRAY_BUFFER, 8*Math.pow(3, 6), gl.STATIC_DRAW );
+    gl.bufferData( gl.ARRAY_BUFFER, Math.pow(4,8),gl.STATIC_DRAW );
+    //8*Math.pow(3, 6),
 
 
 
@@ -58,7 +59,7 @@ function init()
 
     var angleSlider = document.getElementById("angleSlider"); 
     angleSlider.onchange = function() {
-        _angle = -angleSlider.value / 100;
+        _angle = -angleSlider.value * (4*3.14)/(360);
         render();
     };
 
@@ -87,23 +88,21 @@ function tesselateTriangle( a, b, c, count )
         var bc = mix( b, c, 0.5 );
 
         --count;
-        // three new triangles
 
         tesselateTriangle( a, ab, ac, count );
         tesselateTriangle( c, ac, bc, count );
         tesselateTriangle( b, bc, ab, count );
-        tesselateTriangle( ab, bc, ac, count );
+        tesselateTriangle( ab, bc, ac, count);
     }
 }
 
 function twist(pt, ang) {
         var x = pt[0];
         var y = pt[1];
-        var scaling = 1.5;
         var r = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
-        var cosine = Math.cos(scaling*r*ang)
-        var sine = Math.sin(scaling*r*ang)
-        return vec2(x*cosine - y * sine,
+        var cosine = Math.cos(r*ang)
+        var sine = Math.sin(r*ang)
+        return vec2( x*cosine - y * sine,
                     x*sine + y*cosine);
 }
 
@@ -114,29 +113,24 @@ function defaultTwist(pt) {
 
 window.onload = init;
 
-function render() {
-    var baseAngle = 2*Math.PI/3;
+function render()
+{
+    var baseAngle = Math.PI/3;
     var vertices = [
-        vec2( 1, 0 ),
-        vec2( Math.cos(baseAngle), Math.sin(baseAngle)),
-        vec2( Math.cos(2*baseAngle), Math.sin(2*baseAngle))
+        vec2( 0, 1 ),
+        vec2( Math.cos(4*baseAngle), Math.sin(4*baseAngle)),
+        vec2( Math.cos(6*baseAngle), Math.sin(6*baseAngle))
     ];
-
-    vertices = vertices.map( function(ar) {return ar.map(function(x) {return x * 0.75});});
+    vertices = vertices.map( function(ar) {return ar.map(function(x) {return x * 0.5});});
 
     points = [];
-    
-    // tesselation part
     tesselateTriangle( vertices[0], vertices[1], vertices[2],
                     _numTimesToSubdivide);
-    // twisting
-    points = points.map(function (pt) 
-            { return twist(pt,_angle); } 
-             );
+
+    points = points.map(function (pt) twist(pt,_angle));
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
     gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.TRIANGLES, 0, points.length );
-    
     points = [];
     //requestAnimFrame(render);
 }
