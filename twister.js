@@ -167,7 +167,7 @@ function render() {
     points = [];
 
     var mutating;
-    if (!_doTriangle) 
+    if (_doTriangle) 
         mutating = tesselateTriangle;
     else
         mutating = tesselateFractal;
