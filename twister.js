@@ -5,9 +5,12 @@ var gl;
 
 var points = [];
 
+// GLOBALS
 var _tesselationDepth = 12; //actually it's 6
 var _numTimesToSubdivide = 0;
 var _angle = 0;
+var _scaling = 0.5;
+var _doTriangle = true;
 
 var bufferId;
 
@@ -63,6 +66,19 @@ function init() {
         render();
     };
 
+    var sizeSlider = document.getElementById("sizeSlider"); 
+        sizeSlider.onchange = function() {
+        _scaling = 0.5 + sizeSlider.value/100;
+        render();
+    }
+
+    var tesselating = document.getElementById("tesselating"); 
+        tesselating.onchange = function() {
+        _doTriangle = ! _doTriangle;
+        render();
+    }
+
+
     render();
 };
 
@@ -94,6 +110,29 @@ function tesselateTriangle( a, b, c, count ) {
     }
 }
 
+function tesselateFractal( a, b, c, count ) {
+
+    // check for end of recursion
+
+    if ( count === 0 ) {
+        triangle( a, b, c );
+    }
+    else {
+
+        //bisect the sides
+
+        var ab = mix( a, b, 0.5 );
+        var ac = mix( a, c, 0.5 );
+        var bc = mix( b, c, 0.5 );
+
+        --count;
+
+        tesselateFractal( a, ab, ac, count );
+        tesselateFractal( c, ac, bc, count );
+        tesselateFractal( b, bc, ab, count );
+    }
+}
+
 function twist(pt, ang) {
         var x = pt[0];
         var y = pt[1];
@@ -112,16 +151,28 @@ function defaultTwist(pt) {
 window.onload = init;
 
 function render() {
-    var baseAngle = Math.PI/3;
+    var baseAngle = 2*Math.PI/3;
     var vertices = [
-        vec2( 0, 1 ),
-        vec2( Math.cos(4*baseAngle), Math.sin(4*baseAngle)),
-        vec2( Math.cos(6*baseAngle), Math.sin(6*baseAngle))
+        vec2( 1, 0 ),
+        vec2( Math.cos(baseAngle), Math.sin(baseAngle)),
+        vec2( Math.cos(2*baseAngle), Math.sin(2*baseAngle))
     ];
-    vertices = vertices.map( function(ar) {return ar.map(function(x) {return x * 0.5});});
+
+
+    vertices = vertices.map( 
+        function(ar) 
+            {return ar.map(
+                function(x) {return x * _scaling});});
 
     points = [];
-    tesselateTriangle( vertices[0], vertices[1], vertices[2],
+
+    var mutating;
+    if (!_doTriangle) 
+        mutating = tesselateTriangle;
+    else
+        mutating = tesselateFractal;
+
+    mutating( vertices[0], vertices[1], vertices[2],
                     _numTimesToSubdivide);
 
     points = points.map(function (pt) twist(pt,_angle));
