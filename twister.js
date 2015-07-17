@@ -175,7 +175,9 @@ function render() {
     mutating( vertices[0], vertices[1], vertices[2],
                     _numTimesToSubdivide);
 
-    points = points.map(function (pt) twist(pt,_angle));
+    points = points.map(
+        defaultTwist);
+
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
     gl.clear( gl.COLOR_BUFFER_BIT );
     gl.drawArrays( gl.TRIANGLES, 0, points.length );
