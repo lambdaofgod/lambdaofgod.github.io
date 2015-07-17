@@ -54,6 +54,7 @@ function init() {
     gl.enableVertexAttribArray( vPosition );
 
 
+    // slider actions
     var slider = document.getElementById("slider"); 
     slider.onchange = function() {
         _numTimesToSubdivide = slider.value;
@@ -62,7 +63,7 @@ function init() {
 
     var angleSlider = document.getElementById("angleSlider"); 
     angleSlider.onchange = function() {
-        _angle = -angleSlider.value * (4*3.14)/(360);
+    _angle = -angleSlider.value * (4*3.14)/(360);
         render();
     };
 
@@ -71,13 +72,13 @@ function init() {
         _scaling = 0.5 + sizeSlider.value/100;
         render();
     }
-
+/*
     var tesselating = document.getElementById("tesselating"); 
         tesselating.onchange = function() {
         _doTriangle = ! _doTriangle;
         render();
     }
-
+*/
 
     render();
 };
