@@ -8,6 +8,7 @@ var points = [];
 // GLOBALS
 var _tesselationDepth = 12; //actually it's 6
 var _numTimesToSubdivide = 0;
+var _baseAngle = - 2*Math.PI/6;
 var _angle = 0;
 var _scaling = 0.5;
 var _doTriangle = true;
