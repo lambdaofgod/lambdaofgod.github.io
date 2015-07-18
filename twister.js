@@ -11,7 +11,19 @@ var _numTimesToSubdivide = 0;
 var _baseAngle = - 2*Math.PI/6;
 var _angle = 0;
 var _scaling = 0.5;
-var _doTriangle = true;
+
+var _drawingMode = {
+    drawFractal : false, 
+    drawWireframe : false, 
+    changeDrawingFractal : function () {
+        this.drawFractal = !this.drawFractal;
+    },
+    changeDrawingWireframe : function() {
+        this.drawWireframe = !this.drawWireframe;
+    }
+
+};
+
 
 var bufferId;
 
@@ -76,7 +88,7 @@ function init() {
 /*
     var tesselating = document.getElementById("tesselating"); 
         tesselating.onchange = function() {
-        _doTriangle = ! _doTriangle;
+        _drawingMode.drawFractal = ! _drawingMode.drawFractal;
         render();
     }
 */
@@ -168,8 +180,9 @@ function render() {
 
     points = [];
 
+    // drawing mode 1st
     var mutating;
-    if (_doTriangle) 
+    if (_drawingMode.drawFractal) 
         mutating = tesselateTriangle;
     else
         mutating = tesselateFractal;
@@ -182,7 +195,18 @@ function render() {
 
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
     gl.clear( gl.COLOR_BUFFER_BIT );
-    gl.drawArrays( gl.TRIANGLES, 0, points.length );
+
+    // draw triangles
+    
+    // drawing mode 2nd
+    
+    if (_drawingMode.drawWireframe) 
+        gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    else {
+        for (var i = 0; i < points.length; i+=3)
+            gl.drawArrays(gl.LINE_LOOP,i,3)
+    }
+
     points = [];
     //requestAnimFrame(render);
 }
