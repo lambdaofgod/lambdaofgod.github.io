@@ -1,3 +1,6 @@
+/* I think I refactored this code to an acceptable level, if you think of something is wrong with it please share your thoughts
+*/
+
 "use strict";
 
 var canvas;
@@ -46,8 +49,7 @@ var _controller = {
         mutating( vertices[0], vertices[1], vertices[2],
                         _numTimesToSubdivide);
 
-        points = points.map(
-            defaultTwist);
+        points = points.map(defaultTwist);
 
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
         gl.clear( gl.COLOR_BUFFER_BIT );
@@ -90,8 +92,6 @@ function init() {
     gl.bufferData( gl.ARRAY_BUFFER, Math.pow(4,_tesselationDepth),gl.STATIC_DRAW );
     //8*Math.pow(3, 6),
 
-
-
     // Associate out shader variables with our data buffer
 
     var vPosition = gl.getAttribLocation( program, "vPosition" );
@@ -126,7 +126,6 @@ function triangle( a, b, c ) {
 }
 
 function tesselateTriangle( a, b, c, count ) {
-
     // check for end of recursion
 
     if ( count === 0 ) {
@@ -150,7 +149,6 @@ function tesselateTriangle( a, b, c, count ) {
 }
 
 function tesselateFractal( a, b, c, count ) {
-
     // check for end of recursion
 
     if ( count === 0 ) {
