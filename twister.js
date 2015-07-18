@@ -12,7 +12,7 @@ var _baseAngle = - 2*Math.PI/6;
 var _angle = 0;
 var _scaling = 0.5;
 
-var _drawingMode = {
+var _controller = {
     drawFractal : false, 
     drawWireframe : false, 
     changeDrawingFractal : function () {
@@ -20,10 +20,37 @@ var _drawingMode = {
     },
     changeDrawingWireframe : function() {
         this.drawWireframe = !this.drawWireframe;
+    },
+    
+    draw : function(vertices) {
+        var mutating;
+        if (_controller.drawFractal) 
+            mutating = tesselateTriangle;
+        else
+            mutating = tesselateFractal;
+
+        mutating( vertices[0], vertices[1], vertices[2],
+                        _numTimesToSubdivide);
+
+        points = points.map(
+            defaultTwist);
+
+        gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
+        gl.clear( gl.COLOR_BUFFER_BIT );
+
+        // draw triangles
+        
+        // drawing mode 2nd
+        
+        if (!_controller.drawWireframe) 
+            gl.drawArrays( gl.TRIANGLES, 0, points.length );
+        else {
+            for (var i = 0; i < points.length; i+=3)
+                gl.drawArrays(gl.LINE_LOOP,i,3)
+        }
+
     }
-
 };
-
 
 var bufferId;
 
@@ -88,7 +115,7 @@ function init() {
 /*
     var tesselating = document.getElementById("tesselating"); 
         tesselating.onchange = function() {
-        _drawingMode.drawFractal = ! _drawingMode.drawFractal;
+        _controller.drawFractal = ! _controller.drawFractal;
         render();
     }
 */
@@ -147,18 +174,17 @@ function tesselateFractal( a, b, c, count ) {
     }
 }
 
-function twist(pt, ang) {
-        var x = pt[0];
-        var y = pt[1];
-        var r = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
-        var cosine = Math.cos(r*ang)
-        var sine = Math.sin(r*ang)
-        return vec2( x*cosine - y * sine,
-                    x*sine + y*cosine);
-}
-
 function defaultTwist(pt) {
-        return twist(pt,_angle);
+    function twist(pt, ang) {
+            var x = pt[0];
+            var y = pt[1];
+            var r = Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
+            var cosine = Math.cos(r*ang)
+            var sine = Math.sin(r*ang)
+            return vec2( x*cosine - y * sine,
+                        x*sine + y*cosine);
+    }
+    return twist(pt,_angle);
 }
 
 
@@ -172,7 +198,6 @@ function render() {
         vec2( Math.cos(2*baseAngle), Math.sin(2*baseAngle))
     ];
 
-
     vertices = vertices.map( 
         function(ar) 
             {return ar.map(
@@ -180,33 +205,9 @@ function render() {
 
     points = [];
 
-    // drawing mode 1st
-    var mutating;
-    if (_drawingMode.drawFractal) 
-        mutating = tesselateTriangle;
-    else
-        mutating = tesselateFractal;
-
-    mutating( vertices[0], vertices[1], vertices[2],
-                    _numTimesToSubdivide);
-
-    points = points.map(
-        defaultTwist);
-
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
-    gl.clear( gl.COLOR_BUFFER_BIT );
-
-    // draw triangles
+    // drawing mode 
+    _controller.draw(vertices);
     
-    // drawing mode 2nd
-    
-    if (_drawingMode.drawWireframe) 
-        gl.drawArrays( gl.TRIANGLES, 0, points.length );
-    else {
-        for (var i = 0; i < points.length; i+=3)
-            gl.drawArrays(gl.LINE_LOOP,i,3)
-    }
-
     points = [];
     //requestAnimFrame(render);
 }
