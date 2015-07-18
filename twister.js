@@ -22,13 +22,27 @@ var _controller = {
         this.drawWireframe = !this.drawWireframe;
     },
     
-    draw : function(vertices) {
-        var mutating;
-        if (_controller.drawFractal) 
-            mutating = tesselateTriangle;
-        else
-            mutating = tesselateFractal;
+    choose : {
+        tesselation : function () {
+            if (_controller.drawFractal) 
+                return tesselateFractal;
+            else
+                return tesselateTriangle;
+        },
 
+        draw : function() {
+            if (!_controller.drawWireframe) 
+                gl.drawArrays( gl.TRIANGLES, 0, points.length );
+            else {
+                for (var i = 0; i < points.length; i+=3)
+                gl.drawArrays(gl.LINE_LOOP,i,3)
+            }
+        }
+    },
+
+    draw : function(vertices) {
+        var mutating = this.choose.tesselation();
+        
         mutating( vertices[0], vertices[1], vertices[2],
                         _numTimesToSubdivide);
 
@@ -37,18 +51,9 @@ var _controller = {
 
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
         gl.clear( gl.COLOR_BUFFER_BIT );
-
-        // draw triangles
         
         // drawing mode 2nd
-        
-        if (!_controller.drawWireframe) 
-            gl.drawArrays( gl.TRIANGLES, 0, points.length );
-        else {
-            for (var i = 0; i < points.length; i+=3)
-                gl.drawArrays(gl.LINE_LOOP,i,3)
-        }
-
+        this.choose.draw(); 
     }
 };
 
@@ -112,14 +117,7 @@ function init() {
         _scaling = 0.5 + sizeSlider.value/100;
         render();
     }
-/*
-    var tesselating = document.getElementById("tesselating"); 
-        tesselating.onchange = function() {
-        _controller.drawFractal = ! _controller.drawFractal;
-        render();
-    }
-*/
-
+    
     render();
 };
 
