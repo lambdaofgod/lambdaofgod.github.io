@@ -1,4 +1,5 @@
 /* I think I refactored this code to an acceptable level, if you think of something is wrong with it please share your thoughts
+:wa
 */
 
 "use strict";
@@ -49,7 +50,7 @@ var _controller = {
         mutating( vertices[0], vertices[1], vertices[2],
                         _numTimesToSubdivide);
 
-        points = points.map(defaultTwist);
+        //points = points.map(defaultTwist);
 
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(points));
         gl.clear( gl.COLOR_BUFFER_BIT );
@@ -98,6 +99,16 @@ function init() {
     gl.vertexAttribPointer( vPosition, 2, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vPosition );
 
+    // added uniform float
+    var uThetaLoc = gl.getUniformLocation(program,"uTheta");
+    var uScalingLoc = gl.getUniformLocation(program,"uScaling");
+    
+    var updateShaderData= function () {
+        console.log(_angle);
+        console.log(_scaling);
+        gl.uniform1f(uThetaLoc, _angle);
+        gl.uniform1f(uScalingLoc, _scaling);
+    };
 
     // slider actions
     var slider = document.getElementById("slider"); 
@@ -125,12 +136,30 @@ function init() {
         if (!drag) return false;
             
         var dX = e.pageX - old_x;  
-    
-        _angle = _angle - dX* 2* Math.PI / canvas.width; 
+        var mod2pi = function(f) {
+            var cond = function (x) {
+                return (0 <= x && x <= Math.PI*2); 
+            }
+            if (cond(f))
+                return f; 
+            else
+                if ( f < 0) {
+                    while (f < 0) 
+                        f = f + Math.PI*2;
+                }
+                else {
+                    while (Math.PI*2 < f) 
+                        f = f - Math.PI*2;
+                }
+            return f;
+        }
+
+        _angle = mod2pi(_angle - dX* 2* Math.PI / canvas.width); 
         _scaling = 0.5 + (e.pageY / canvas.height)/25;
         console.log(_angle);
         old_x = e.pageX;
         e.preventDefault();
+        updateShaderData();
         render();
     };
 
@@ -178,7 +207,7 @@ function tesselateTriangle( a, b, c, count ) {
 function tesselateFractal( a, b, c, count ) {
     // check for end of recursion
 
-    if ( count === 0 ) {
+    if ( count <= 0 ) {
         triangle( a, b, c );
     }
     else {
@@ -221,10 +250,12 @@ function render() {
         vec2( Math.cos(2*baseAngle), Math.sin(2*baseAngle))
     ];
 
+    /*
     vertices = vertices.map( 
         function(ar) 
             {return ar.map(
                 function(x) {return x * _scaling});});
+    */
 
     points = [];
 

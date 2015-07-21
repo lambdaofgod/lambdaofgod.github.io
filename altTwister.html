@@ -7,12 +7,24 @@
 
 <script id="vertex-shader" type="x-shader/x-vertex">
 attribute vec4 vPosition;
+uniform float uTheta;
+uniform float uScaling;
 
-void
-main()
-{
-    gl_Position = vPosition;
+vec2 twist(vec4 pt, float angle) {
+    float r = length(pt); 
+    float c = cos(r*angle);
+    float s = sin(r*angle);
+    vec2 twisted = vec2(pt.x * c - pt.y * s, pt.x * s + pt.y * c);
+    return twisted;
+}
 
+vec2 defaultTwist(vec4 pt) {
+    return twist(pt,uTheta);
+}
+
+void main() {
+    vec2 twisted = defaultTwist(vPosition);
+    gl_Position = vec4(uScaling * twisted, 0.0, 1.0);
 }
 </script>
 
