@@ -187,6 +187,7 @@ function defaultTwist(pt) {
 window.onload = init;
 
 function render() {
+    console.log("dupa!")
     var baseAngle = 2*Math.PI/3;
     var vertices = [
         vec2( 1, 0 ),
