@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 
 <script id="vertex-shader" type="x-shader/x-vertex">
@@ -7,9 +6,7 @@ attribute vec4 vColor;
 
 varying vec4 fColor;
 
-
-void
-main()
+void main()
 {
     gl_Position = vPosition;
     fColor = vColor;
@@ -21,8 +18,7 @@ main()
 precision mediump float;
 
 varying vec4 fColor;
-void
-main()
+void main()
 {
     gl_FragColor = fColor;
 }
@@ -35,8 +31,8 @@ main()
 
 <body>
 <div>
-<canvas id="gl-canvas" width="512"" height="512">
-Oops ... your browser doesn't support the HTML5 canvas element 
+<canvas id="gl-canvas" width="512"" height="512"
+Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
 </div>
 <div>
@@ -49,7 +45,7 @@ Oops ... your browser doesn't support the HTML5 canvas element
     <option value = "5">Magenta</option>
     <option value = "6">Cyan</option>
 </select>
-<button id = "Button1">End Polygon</button>
+
 </div>
 
 
