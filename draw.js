@@ -8,7 +8,7 @@ var maxNumVertices  = 3 * maxNumTriangles;
 var index = 0;
 var first = true;
 
-var t1, t2, t3, t4;
+var t1, t2, t3, t4, t;
 
 var cIndex = 0;
 
@@ -21,7 +21,6 @@ var colors = [
     vec4( 1.0, 0.0, 1.0, 1.0 ),  // magenta
     vec4( 0.0, 1.0, 1.0, 1.0 )   // cyan
 ];
-
 
 window.onload = function init() {
     canvas = document.getElementById( "gl-canvas" );
@@ -41,20 +40,18 @@ window.onload = function init() {
         },
         
     
-        addLine : function(t1, t2) {
-          console.log("ADDING LINE!");
+        addPoint: function(t1) {
+          console.log("ADDING A POINT!");
             
           gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
           // push vertices to buffer
-          gl.bufferSubData(gl.ARRAY_BUFFER, 8*index, flatten(t2));
-          gl.bufferSubData(gl.ARRAY_BUFFER, 8*(index+1), flatten(t1));
+          gl.bufferSubData(gl.ARRAY_BUFFER, 8*index, flatten(t1));
           gl.bindBuffer( gl.ARRAY_BUFFER, cBuffer);
-          index += 2;
+          index += 1;
 
           t = vec4(colors[cIndex]);
             
           // push colors to buffer
-          gl.bufferSubData(gl.ARRAY_BUFFER, 16*(index-2), flatten(t));
           gl.bufferSubData(gl.ARRAY_BUFFER, 16*(index-1), flatten(t));
         
           return index;
@@ -100,26 +97,26 @@ window.onload = function init() {
         console.log("drawing");
         drawing = true;
     });
+    
+    window.oldT = null;
 
-    var oldT = null;
-    var currentT;
+    //var oldT = null;
     canvas.addEventListener("mousemove", function(event) { 
         if (!drawing) return; 
         
-        currentT = helpers.getMouseCoord(event);
-        if (oldT === null) oldT = currentT;
+        var currentT = helpers.getMouseCoord(event);
+        if (window.oldT == null) window.oldT = currentT;
       
         var distance = function(v1, v2) { 
             return Math.pow(v1[0] - v2[0],2) + Math.pow(v1[1] - v2[1],2);
         }
          
         console.log(currentT); 
-        console.log(oldT);
+        console.log(window.oldT);
         console.log(distance(currentT,oldT));
-        if (0.5 < distance(currentT,oldT)) {
-            index = helpers.addLine(oldT,currentT); 
-            oldT = currentT;
-            currentT = helpers.getMouseCoord(event);
+        if (0.05 < distance(currentT,oldT)) {
+            index = helpers.addPoint(currentT); 
+            window.oldT = null;
         }
     });
 
@@ -144,8 +141,9 @@ function render() {
   
   
     //console.log("index " + index); 
-    for(var i = 0; i< index; i+=2)
-        gl.drawArrays( gl.LINES, i, 2 );
+    //for(var i = 0; i< index; i++)
+     gl.lineWidth(5);
+     gl.drawArrays( gl.LINE_STRIP, 0, index );
 
     window.requestAnimFrame(render);
 
