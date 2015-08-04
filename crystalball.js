@@ -17,8 +17,7 @@ var theta = [ 0, 0, 0 ];
 
 var thetaLoc;
 
-window.onload = function init()
-{
+window.onload = function init() {
     canvas = document.getElementById( "gl-canvas" );
 
     gl = WebGLUtils.setupWebGL( canvas );
@@ -57,34 +56,24 @@ window.onload = function init()
     thetaLoc = gl.getUniformLocation(program, "theta");
 
     //event listeners for buttons
-
-    document.getElementById( "xButton" ).onclick = function () {
-        axis = xAxis;
-    };
-    document.getElementById( "yButton" ).onclick = function () {
-        axis = yAxis;
-    };
-    document.getElementById( "zButton" ).onclick = function () {
-        axis = zAxis;
-    };
-
     var rotate = false;
     var old_x = 0, old_y = 0;
-    
+
     canvas.addEventListener("mouseup", function() {
         rotate = false;});
 
-    canvas.addEventListener("mousedown", function() {
-        rotate = true;});
-    
+    canvas.addEventListener("mousedown", function(event) {
+        rotate = true;
+        old_x = event.pageX;
+        old_y = event.pageY;
+    });
+
     canvas.addEventListener("mousemove", function(event) {
         if (!rotate) return;
 
         var dX = event.pageX - old_x;
         var dY = event.pageY - old_y;
 
-        console.log(dX);
-        console.log(dY);
         theta[yAxis] += -dX;
         theta[xAxis] += -dY;
         
@@ -98,8 +87,7 @@ window.onload = function init()
     render();
 }
 
-function colorCube()
-{
+function colorCube() {
     quad( 1, 0, 3, 2 );
     quad( 2, 3, 7, 6 );
     quad( 3, 0, 4, 7 );
@@ -108,8 +96,8 @@ function colorCube()
     quad( 5, 4, 0, 1 );
 }
 
-function quad(a, b, c, d)
-{
+// make square
+function quad(a, b, c, d) {
     var vertices = [
         vec4( -0.5, -0.5,  0.5, 1.0 ),
         vec4( -0.5,  0.5,  0.5, 1.0 ),
@@ -150,8 +138,7 @@ function quad(a, b, c, d)
     }
 }
 
-function render()
-{
+function render() {
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     //theta[axis] += 2.0;
@@ -161,3 +148,11 @@ function render()
 
     requestAnimFrame( render );
 }
+ 
+/*
+HANDLING BUTTONS
+    document.getElementById( "xButton" ).onclick = function () {
+        axis = xAxis;
+    };
+*/
+
