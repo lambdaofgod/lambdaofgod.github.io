@@ -1,8 +1,7 @@
 "use strict";
 /*
     TODO:
-    - add fields/sliders for size/orientation/position
-    - link above fields with objects
+    - correct render (it doesn't show all objects)
 */
 var canvas;
 var gl;
@@ -23,7 +22,7 @@ window.onload = function init() {
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
     // OBJECTS INITIALIZATION
-    var cone = new Cone();
+    var cone = new Cylinder();
     cone.scale = [0.3, 0.3, 0.3];
     cone.rotation = [0, 0, 0];
     var objects = [cone];
@@ -64,7 +63,12 @@ function render() {
         gl.vertexAttrib3f(vScaling, figure.scale[0], figure.scale[1], figure.scale[2]);
         var vTranslation = gl.getAttribLocation(program, "translation");
         gl.vertexAttrib3f(vTranslation, figure.position[0], figure.position[1], figure.position[2]);
-        gl.drawArrays(gl.LINES, 0, toDraw.length);
+        var drawMode = null;
+        if (figure.className == "Cylinder")
+            drawMode = gl.LINE_STRIP;
+        else
+            drawMode = gl.LINES;
+        gl.drawArrays(drawMode, 0, toDraw.length);
     });
     //requestAnimFrame( render );
 }
@@ -148,6 +152,8 @@ var UI = (function () {
         // set initMenu
         for (var i = 0; i < this.figures.length; i++)
             this.addFigure(this.figures[i]);
+        if (this.figures != [])
+            this.current = this.figures[0];
         // set initMenu callbacks
         // set typeChoice's callbacks
     };
@@ -250,14 +256,19 @@ var Cylinder = (function (_super) {
         this.topVertices = Figure.circleVertices(0.5);
         this.downVertices = Figure.circleVertices(-0.5);
         this.vertices = addArrays(Figure.circleVertices(0.5), Figure.circleVertices(-0.5));
+        this.centerUp = [0.0, 0.5, 0.0, 1.0];
+        this.centerDown = [0.0, -0.5, 0.0, 1.0];
     }
     Cylinder.prototype.getWireframeVertices = function () {
         var ordered = [];
-        for (var i = 0; i < this.topVertices.length; i++) {
+        var len = this.topVertices.length;
+        for (var i = 0; i < len; i++) {
             ordered.push(this.topVertices[i]);
+            ordered.push(this.centerUp);
+            ordered.push(this.centerDown);
             ordered.push(this.downVertices[i]);
+            ordered.push(this.topVertices[i]);
         }
-        //return ordered; 
         return addArrays(this.vertices, ordered);
     };
     return Cylinder;
