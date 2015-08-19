@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+varying    vec4 fColor;
+
+attribute  vec3 scaling;
+attribute  vec3 translation;
+attribute  vec3 rotation;
+
+void main()
+{
+    // Compute the sines and cosines of angles for each of
+    //   the three axes in one computation.
+    vec3 angles = radians( rotation );
+    vec3 c = cos( angles );
+    vec3 s = sin( angles );
+
+    // Remeber: thse matrices are column-major
+    mat4 rx = mat4( 1.0,  0.0,  0.0, 0.0,
+		    0.0,  c.x,  s.x, 0.0,
+		    0.0, -s.x,  c.x, 0.0,
+		    0.0,  0.0,  0.0, 1.0 );
+
+    mat4 ry = mat4( c.y, 0.0, -s.y, 0.0,
+		    0.0, 1.0,  0.0, 0.0,
+		    s.y, 0.0,  c.y, 0.0,
+		    0.0, 0.0,  0.0, 1.0 );
+
+
+    mat4 rz = mat4( c.z, -s.z, 0.0, 0.0,
+		    s.z,  c.z, 0.0, 0.0,
+		    0.0,  0.0, 1.0, 0.0,
+		    0.0,  0.0, 0.0, 1.0 );
+
+    mat4 rotate = rz * ry * rx;
+
+    mat4 scale = mat4(scaling.x, 0.0, 0.0, 0.0, 
+                      0, scaling.y, 0.0, 0.0, 
+                      0, 0.0, scaling.z, 0.0, 
+                      0, 0.0, 0.0 , 1.0); 
+
+    mat4 translate = mat4(1.0, 0.0, 0.0, translation.x,
+                          0.0, 1.0, 0.0, translation.y,
+                          0.0, 0.0, 1.0, translation.z,
+                          0.0, 0.0, 0.0, 1.0); 
+
+    fColor = vColor;
+    mat4 modelTransform = translate * rotate * scale;
+    gl_Position = modelTransform * vPosition;
+}
+
+
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+
+varying vec4 fColor;
+
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="Util/webgl-utils.js"></script>
+<script type="text/javascript" src="Util/initShaders.js"></script>
+<script type="text/javascript" src="Util/MV.js"></script>
+<script type="text/javascript" src="cad.js"></script>
+
+<body>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+<div id="interactions"> 
+    <div id="buttons">
+        <button id="setButton">Set attributes </button>
+        <button id="createButton">Create new object</button>
+    </div>
+    
+    <div id="menus">
+        <select id="objectsMenu"> 
+        </select>
+       
+        <select id="typeChoice"> 
+            <option value="1">Cone</option>
+            <option value="2">Cylinder</option>
+            <option value="3">Sphere</option>
+        </select>
+         
+    </div>
+    
+    <div id="forms">
+        
+        <div id="orientation">
+            Rotation 
+            <br>
+            <input id="angleX" type="range"
+            min="0" max="360" step="1" value="0"/>
+       
+            <input id="angleY" type="range"
+            min="0" max="360" step="1" value="0"/>
+            
+            <input id="angleZ" type="range"
+            min="0" max="360" step="1" value="0"/>
+        </div>
+       
+        <div id="size"> 
+            Size
+            <br>
+            <input id="sizeX"  type="range"
+            min="0.1" max="2" step="0.1" value="0.2"/>
+
+            <input id="sizeY"  type="range"
+            min="0.1" max="2" step="0.1" value="0.2"/>
+
+            <input id="sizeZ"  type="range"
+            min="0.1" max="2" step="0.1" value="0.2"/>
+        </div>
+
+        <form id="position">
+            Position
+            <br>
+            x: <input id="positionX" type="number" value="0">  
+            y: <input id="positionY" type="number" value="0">  
+            z: <input id="positionZ" type="number" value="0">  
+        </form>
+    </div>
+
+
+</div>
+<br/>
+
+<!-- buttons
+<select id = "objectList" size = "7">
+    <option value = "0">Black</option>
+</select>
+
+<button id= "xButton">Rotate X</button>
+--!>
+
+</body>
+</html>

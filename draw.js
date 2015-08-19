@@ -41,7 +41,7 @@ window.onload = function init() {
         
     
         addPoint: function(t1) {
-          console.log("ADDING A POINT!");
+          //console.log("ADDING A POINT!");
             
           gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
           // push vertices to buffer
@@ -94,7 +94,7 @@ window.onload = function init() {
     });
 
     canvas.addEventListener("mousedown", function(event) {
-        console.log("drawing");
+        //console.log("drawing");
         drawing = true;
     });
     
@@ -110,10 +110,12 @@ window.onload = function init() {
         var distance = function(v1, v2) { 
             return Math.pow(v1[0] - v2[0],2) + Math.pow(v1[1] - v2[1],2);
         }
-         
+        
+        /* 
         console.log(currentT); 
         console.log(window.oldT);
         console.log(distance(currentT,oldT));
+        */
         if (0.05 < distance(currentT,oldT)) {
             index = helpers.addPoint(currentT); 
             window.oldT = null;
