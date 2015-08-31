@@ -1,8 +1,4 @@
-"use strict";
-/*
-    TODO:
-    - correct render (it doesn't show all objects)
-*/
+"use :strict";
 var canvas;
 var gl;
 var ui;
@@ -12,34 +8,45 @@ window.onload = function init() {
     if (!gl) {
         alert("WebGL isn't available");
     }
-    //colorCube();
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(1.0, 1.0, 1.0, 1.0);
     gl.enable(gl.DEPTH_TEST);
+    gl.depthFunc(gl.LESS);
     //
     //  Load shaders 
     //
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
     // OBJECTS INITIALIZATION
-    var cone = new Cylinder();
-    cone.scale = [0.3, 0.3, 0.3];
-    cone.rotation = [0, 0, 0];
-    var objects = [cone];
+    var initShape = new Cylinder();
+    initShape.scale = [0.3, 0.3, 0.3];
+    initShape.rotation = [0, 0, 0];
+    var objects = [initShape];
     //var menu = document.getElementById( "objectList" );
     ui = new UI(objects);
     render();
 };
 function render() {
     var figures = ui.figures;
+    function draw(drawMode, toDraw) {
+        var buff = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buff);
+        gl.bufferData(gl.ARRAY_BUFFER, flatten(toDraw), gl.STATIC_DRAW);
+        gl.drawArrays(drawMode, 0, toDraw.length);
+    }
     //gl.clearColor(0.0, 0.0, 0.5, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     figures.forEach(function (figure) {
-        var toDraw = figure.getWireframeVertices();
+        drawFigure(figure);
+    });
+    //requestAnimFrame( render );
+}
+function drawFigure(figure) {
+    var draw = function (drawMode, toDraw, color) {
         var incolors = [];
         for (var i = 0; i < toDraw.length; i++) {
             // get black lines
-            incolors.push([0.0, 0.0, 0.0, 1.0]);
+            incolors.push(color);
         }
         var program = initShaders(gl, "vertex-shader", "fragment-shader");
         gl.useProgram(program);
@@ -50,8 +57,9 @@ function render() {
         var vColor = gl.getAttribLocation(program, "vColor");
         gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(vColor);
-        var vBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+        // WIREFRAME VERTICES DATA
+        var toDrawBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, toDrawBuffer);
         gl.bufferData(gl.ARRAY_BUFFER, flatten(toDraw), gl.STATIC_DRAW);
         var vPosition = gl.getAttribLocation(program, "vPosition");
         gl.vertexAttribPointer(vPosition, 4, gl.FLOAT, false, 0, 0);
@@ -63,111 +71,19 @@ function render() {
         gl.vertexAttrib3f(vScaling, figure.scale[0], figure.scale[1], figure.scale[2]);
         var vTranslation = gl.getAttribLocation(program, "translation");
         gl.vertexAttrib3f(vTranslation, figure.position[0], figure.position[1], figure.position[2]);
-        var drawMode = null;
-        if (figure.className == "Cylinder")
-            drawMode = gl.LINE_STRIP;
-        else
-            drawMode = gl.LINES;
         gl.drawArrays(drawMode, 0, toDraw.length);
-    });
-    //requestAnimFrame( render );
+    };
+    var wireframeMode = null;
+    var solidMode = null;
+    // for cone
+    wireframeMode = gl.LINES;
+    solidMode = gl.TRIANGLE_STRIP;
+    draw(wireframeMode, figure.getWireframeVertices(), [1.0, 1.0, 1.0, 1.0]);
+    draw(solidMode, figure.getSolidVertices(), [0.0, 0.0, 0.0, 1.0]);
 }
 function addArrays(a1, a2) {
     return a1.concat(a2);
 }
-var UI = (function () {
-    function UI(initFigures) {
-        var _this = this;
-        // where we place objectsMenu, creator and forms
-        this.place = document.getElementById("interactions");
-        this.figureNumbers = {
-            "Cone": 0,
-            "Sphere": 0,
-            "Cylinder": 0
-        };
-        this.figures = initFigures;
-        this.objectsMenu = document.getElementById("objectsMenu");
-        this.createButton = document.getElementById("createButton");
-        this.setButton = document.getElementById("setButton");
-        this.typeChoice = document.getElementById("typeChoice");
-        this.initializeMenus();
-        var buttons = this.place.children[0];
-        var menus = this.place.children[1];
-        var forms = this.place.children[2];
-        menus.appendChild(this.objectsMenu);
-        menus.appendChild(this.typeChoice);
-        // callbacks for buttons
-        this.setButton.addEventListener("click", function (event) {
-            var getValue = function (name) {
-                return parseFloat(document.getElementById(name).value);
-            };
-            var size = ["sizeX", "sizeY", "sizeZ"].map(getValue);
-            console.log(size);
-            var orientation = ["angleX", "angleY", "angleZ"].map(getValue);
-            var position = ["positionX", "positionY", "positionZ"].map(getValue);
-            _this.current.scale = size;
-            _this.current.rotation = orientation;
-            _this.current.position = position;
-            render();
-        });
-        this.objectsMenu.addEventListener("click", function (event) {
-            var index = _this.objectsMenu.selectedIndex;
-            _this.current = _this.figures[index];
-        });
-        this.createButton.addEventListener("click", function (event) {
-            var newFig = _this.createFigure(_this.nextType);
-            _this.figures.push(newFig);
-            _this.addFigure(newFig);
-            render();
-        });
-        // callback for typeChoice 
-        this.typeChoice.addEventListener("click", function (event) {
-            var index = _this.typeChoice.selectedIndex;
-            var kind = _this.typeChoice.options[index].text;
-            _this.nextType = kind;
-            render();
-        });
-    }
-    UI.prototype.createFigure = function (tp) {
-        // get all the stuff from forms/sliders
-        var getValue = function (name) {
-            return parseInt(document.getElementById(name).value);
-        };
-        var size = ["sizeX", "sizeY", "sizeZ"].map(getValue);
-        var orientation = ["angleX", "angleY", "angleZ"].map(getValue);
-        var position = ["positionX", "positionY", "positionZ"].map(getValue);
-        var newFigure;
-        if (tp == "Cone")
-            newFigure = new Cone(size, orientation, position);
-        else if (tp == "Sphere")
-            newFigure = new Sphere(size, orientation, position);
-        else
-            newFigure = new Cylinder(size, orientation, position);
-        return newFigure;
-    };
-    UI.prototype.select = function (fig) {
-        // link fig's data to fields in document
-    };
-    UI.prototype.initializeMenus = function () {
-        // set initMenu
-        for (var i = 0; i < this.figures.length; i++)
-            this.addFigure(this.figures[i]);
-        if (this.figures != [])
-            this.current = this.figures[0];
-        // set initMenu callbacks
-        // set typeChoice's callbacks
-    };
-    UI.prototype.addFigure = function (added) {
-        this.figureNumbers[added.className] += 1;
-        var i = this.figureNumbers[added.className];
-        var option = document.createElement("option");
-        option.value = i; //.toString();
-        option.text = added.className + " " + i;
-        if (this.objectsMenu !== null)
-            this.objectsMenu.appendChild(option);
-    };
-    return UI;
-})();
 // for debugging purposes
 //console.log(objects[0].getWireframeVertices().length);
 //objects[0].getWireframeVertices().forEach( x =>  console.log(x));
@@ -182,18 +98,24 @@ var __extends = this.__extends || function (d, b) {
 };
 var Figure = (function () {
     function Figure(initSize, initOrientation, initPos, initColor) {
-        //check whether arguments have proper size
         if (initSize === void 0) { initSize = Figure.ones; }
         if (initOrientation === void 0) { initOrientation = Figure.zeros; }
         if (initPos === void 0) { initPos = Figure.zeros; }
         if (initColor === void 0) { initColor = Figure.zeros; }
         this.className = "Figure";
+        //check whether arguments have proper size
+        var assertion = (initSize.length === 3) && (initOrientation.length === 3) && (initPos.length === 3) && (initColor.length === 3);
+        if (!assertion) {
+            alert("Failed to create Shape");
+            return;
+        }
         this.scale = initSize;
         this.rotation = initOrientation;
         this.color = initColor;
         this.position = initPos;
-        //
     }
+    /** Returns array of vertices
+     * laying on a circle with specified y coordinate */
     Figure.circleVertices = function (y) {
         var base = [];
         var pi = Math.PI;
@@ -202,8 +124,14 @@ var Figure = (function () {
         return base;
     };
     ;
-    Figure.prototype.getWireframeVertices = function () { return []; };
+    Figure.prototype.getWireframeVertices = function () {
+        throw new Error("getWireframeVertices unimplemented");
+    };
+    Figure.prototype.getSolidVertices = function () {
+        throw new Error("getWireframeVertices unimplemented");
+    };
     Figure.prototype.transform = function (by) { };
+    /* Controls the accuracy of shape's interpolation */
     Figure.accuracy = 20;
     Figure.zeros = [0, 0, 0];
     Figure.ones = [1, 1, 1];
@@ -271,6 +199,33 @@ var Cylinder = (function (_super) {
         }
         return addArrays(this.vertices, ordered);
     };
+    Cylinder.prototype.getSolidVertices = function () {
+        // this function is used to 
+        var interCalate = function (base, withInter) {
+            var intercalated = [];
+            for (var i = 0; i < base.length; i++) {
+                intercalated.push(withInter);
+                intercalated.push(base[i]);
+            }
+            intercalated.push(base[0]);
+            return intercalated;
+        };
+        var tops = interCalate(this.topVertices, this.centerUp);
+        var downs = interCalate(this.downVertices, this.centerDown);
+        var middles = [];
+        for (var i = 0; i < this.downVertices.length; i += 2) {
+            middles.push(downs[i]);
+            middles.push(tops[i]);
+            middles.push(tops[i + 1]);
+            middles.push(downs[i + 1]);
+        }
+        middles.push(downs[0]);
+        middles.push(tops[0]);
+        var solidVertices = tops
+            .concat(middles)
+            .concat(downs);
+        return solidVertices;
+    };
     return Cylinder;
 })(Figure);
 var Cone = (function (_super) {
@@ -298,5 +253,178 @@ var Cone = (function (_super) {
         }
         return ordered;
     };
+    Cone.prototype.getSolidVertices = function () {
+        /*
+        var tmp = [this.topVertex];
+        tmp = tmp.concat(this.vertices);
+        */
+        return this.getWireframeVertices();
+        ;
+    };
     return Cone;
 })(Figure);
+/* UI - class managing HTML-JS interaction
+ *
+ * objectsMenu handles selecting/adding objects
+ * typeChoice handles type of added elements
+ *
+ */
+var UI = (function () {
+    /*
+     * THE CONSTRUCTOR
+     */
+    function UI(initFigures) {
+        // where we place objectsMenu, creator and forms
+        this.place = document.getElementById("interactions");
+        this.figureNumbers = {
+            "Cone": 0,
+            "Sphere": 0,
+            "Cylinder": 0
+        };
+        this.figures = initFigures;
+        this.objectsMenu = document.getElementById("objectsMenu");
+        this.createButton = document.getElementById("createButton");
+        this.setButton = document.getElementById("setButton");
+        this.typeChoice = document.getElementById("typeChoice");
+        this.initializeMenus();
+        var buttons = this.place.children[0];
+        var menus = this.place.children[1];
+        var forms = this.place.children[2];
+        menus.appendChild(this.objectsMenu);
+        menus.appendChild(this.typeChoice);
+        /*
+         * BUTTONS' CALLBACKS
+         */
+        this.addObjectsMenuCallback();
+        this.addSettingCallbacks();
+        this.addCreationCallback();
+        this.addChoiceCallback();
+    }
+    /* Set current object accordingly  */
+    UI.prototype.addObjectsMenuCallback = function () {
+        var _this = this;
+        this.objectsMenu.addEventListener("click", function (event) {
+            var index = _this.objectsMenu.selectedIndex;
+            console.log("current is" + index);
+            if (index !== 0)
+                _this.current = _this.figures[index - 1];
+            else
+                _this.current = null;
+        });
+    };
+    /* Button for setting parameters of current object
+         *
+         */
+    UI.prototype.addSettingCallbacks = function () {
+        var _this = this;
+        this.setButton.addEventListener("click", function (event) {
+            if (_this.current === null)
+                return;
+            /* Get value from field that is named fname */
+            var sizeSliders = _this.toArray(_this.getElement("size").children);
+            var orientationSliders = _this.toArray(_this.getElement("orientation").children);
+            var positionSliders = _this.toArray(_this.getElement("position").children);
+            var dimToInt = function (dim) {
+                if (dim == "X")
+                    return 0;
+                if (dim == "Y")
+                    return 1;
+                if (dim == "Z")
+                    return 2;
+            };
+            //sizeSliders.forEach(
+            var initSize = sizeSliders.map(_this.getValue);
+            var initOrientation = orientationSliders.map(_this.getValue);
+            var initPosition = positionSliders.map(_this.getValue);
+            console.log(initSize);
+            _this.current.scale = initSize;
+            _this.current.rotation = initOrientation;
+            _this.current.position = initPosition;
+            console.log(_this.current.scale);
+            console.log(_this.current.rotation);
+            console.log(_this.current.position);
+            render();
+        });
+    };
+    /* Create new object*/
+    UI.prototype.addCreationCallback = function () {
+        var _this = this;
+        this.createButton.addEventListener("click", function (event) {
+            // this means we actually don't want to create new object
+            if (_this.current !== null)
+                return;
+            var newFig = _this.createFigure(_this.nextType);
+            _this.figures.push(newFig);
+            _this.current = _this.figures[0];
+            _this.registerFigure(newFig);
+            console.log("added new" + newFig.className);
+            render();
+        });
+    };
+    /* Callback for typeChoice */
+    UI.prototype.addChoiceCallback = function () {
+        var _this = this;
+        this.typeChoice.addEventListener("click", function (event) {
+            var index = _this.typeChoice.selectedIndex;
+            var kind = _this.typeChoice.options[index].text;
+            _this.nextType = kind;
+            render();
+        });
+    };
+    /* Create new Figure of specified type */
+    UI.prototype.createFigure = function (tp) {
+        // get all the stuff from forms/sliders
+        var sizeSliders = this.toArray(this.getElement("size").children);
+        var orientationSliders = this.toArray(this.getElement("orientation").children);
+        var positionSliders = this.toArray(this.getElement("position").children);
+        var initSize = sizeSliders.map(this.getValue);
+        var initOrientation = orientationSliders.map(this.getValue);
+        var initPosition = positionSliders.map(this.getValue);
+        var newFigure;
+        if (tp == "Cone")
+            newFigure = new Cone(initSize, initOrientation, initPosition);
+        else if (tp == "Sphere")
+            newFigure = new Sphere(initSize, initOrientation, initPosition);
+        else
+            newFigure = new Cylinder(initSize, initOrientation, initPosition);
+        return newFigure;
+    };
+    UI.prototype.select = function (fig) {
+        // link fig's data to fields in document
+    };
+    UI.prototype.initializeMenus = function () {
+        // set initMenu
+        for (var i = 0; i < this.figures.length; i++)
+            this.registerFigure(this.figures[i]);
+        if (this.figures != [])
+            this.current = this.figures[0];
+        // set initMenu callbacks
+        // set typeChoice's callbacks
+    };
+    /* Add specified figure to array of Figures
+     */
+    UI.prototype.registerFigure = function (added) {
+        if (added === null)
+            return;
+        this.figureNumbers[added.className] += 1;
+        var i = this.figureNumbers[added.className];
+        var option = document.createElement("option");
+        option.value = i; //.toString();
+        option.text = added.className + " " + i;
+        if (this.objectsMenu !== null)
+            this.objectsMenu.appendChild(option);
+    };
+    UI.prototype.getElement = function (fname) {
+        return document.getElementById(fname);
+    };
+    UI.prototype.getValue = function (elem) {
+        return parseFloat(elem.value);
+    };
+    UI.prototype.toArray = function (coll) {
+        var ar = [];
+        for (var i = 0; i < coll.length; i++)
+            ar.push(coll[i]);
+        return ar;
+    };
+    return UI;
+})();

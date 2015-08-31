@@ -50,8 +50,8 @@ void main()
                        
 
     fColor = vColor;
-    mat4 modelTransform = translate * rotate * scale;
-    gl_Position = modelTransform * vPosition;
+    mat4 modelTransform = scale * rotate * translate;// * rotate * scale;
+    gl_Position =  modelTransform * vPosition;
 }
 
 
@@ -76,18 +76,22 @@ main()
 <script type="text/javascript" src="cad.js"></script>
 
 <body>
-<canvas id="gl-canvas" width="512" height="512">
-Oops ... your browser doesn't support the HTML5 canvas element
-</canvas>
+<div id="canvasDiv">
+    <canvas id="gl-canvas" width="800" height="600">
+    Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+</div>
 
-<div id="interactions"> 
-    <div id="buttons">
+<div id="interactions" class"ui left sidebar"> 
+   
+   <div id="buttons">
         <button id="setButton">Set attributes </button>
         <button id="createButton">Create new object</button>
     </div>
     
     <div id="menus">
         <select id="objectsMenu"> 
+          <option value="0">New Figure</option>
         </select>
        
         <select id="typeChoice"> 
@@ -99,53 +103,63 @@ Oops ... your browser doesn't support the HTML5 canvas element
     </div>
     
     <div id="forms">
-        
+       
+        Rotation 
+        <br>
         <div id="orientation">
-            Rotation 
-            <br>
-            <input id="angleX" type="range"
+                        <input id="X" type="range"
             min="0" max="360" step="1" value="0"/>
        
-            <input id="angleY" type="range"
+            <input id="Y" type="range"
             min="0" max="360" step="1" value="0"/>
             
-            <input id="angleZ" type="range"
+            <input id="Z" type="range"
             min="0" max="360" step="1" value="0"/>
         </div>
-       
+      
+        Size
+        <br>
         <div id="size"> 
-            Size
-            <br>
-            <input id="sizeX"  type="range"
+            <input id="X"  type="range"
             min="0.1" max="2" step="0.1" value="0.2"/>
 
-            <input id="sizeY"  type="range"
+            <input id="Y"  type="range"
             min="0.1" max="2" step="0.1" value="0.2"/>
 
-            <input id="sizeZ"  type="range"
+            <input id="Z"  type="range"
             min="0.1" max="2" step="0.1" value="0.2"/>
         </div>
-
+        
+        Position
+        <br>
         <form id="position">
-            Position
-            <br>
-            x: <input id="positionX" type="number" value="0">  
-            y: <input id="positionY" type="number" value="0">  
-            z: <input id="positionZ" type="number" value="0">  
+            x: <input id="X" type="number" value="0">  
+            y: <input id="Y" type="number" value="0">  
+            z: <input id="Z" type="number" value="0">  
         </form>
     </div>
 
 
 </div>
+
+
+
+<style type="text/css">
+#canvasDiv {
+        width:800;
+        height:600px;
+        float:left;
+        background-color:#666;
+    }
+#interactions {
+        width:200px;
+        height:600px;
+        float:left;
+        background-color:#ccc;
+    }
+</style>
+
 <br/>
-
-<!-- buttons
-<select id = "objectList" size = "7">
-    <option value = "0">Black</option>
-</select>
-
-<button id= "xButton">Rotate X</button>
---!>
 
 </body>
 </html>
