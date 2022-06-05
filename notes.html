@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-06-05 nie 22:38 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="author" content="kuba" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org8a6dc01">1. ML/DL</a>
+<ul>
+<li><a href="#org59877bb">1.1. Interesting transformers</a></li>
+<li><a href="#orgfaecb8c">1.2. How to run GPT et c</a></li>
+<li><a href="#org2e0947b">1.3. Vision + text models</a>
+<ul>
+<li><a href="#org1ca1c3e">1.3.1. CLIP - huggingface + sentence transformers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9b7b3f0">2. IR</a></li>
+<li><a href="#orgee51c7e">3. Tooling</a>
+<ul>
+<li><a href="#org776fb3d">3.1. Ploomber</a>
+<ul>
+<li><a href="#orgbc347f5">3.1.1. Resources</a></li>
+<li><a href="#orgc1c308b">3.1.2. Basics</a></li>
+<li><a href="#org695d79c">3.1.3. Hyperparameters</a></li>
+<li><a href="#org5722d96">3.1.4. Partial run</a></li>
+</ul>
+</li>
+<li><a href="#orgcfc3d95">3.2. Elasticsearch</a></li>
+</ul>
+</li>
+<li><a href="#org1719168">4. Physics</a></li>
+</ul>
+</div>
+</div>
+<p>
+MY PROJECT -<b>- mode: org -</b>-
+</p>
+
+
+<div id="outline-container-org8a6dc01" class="outline-2">
+<h2 id="org8a6dc01"><span class="section-number-2">1.</span> ML/DL</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org59877bb" class="outline-3">
+<h3 id="org59877bb"><span class="section-number-3">1.1.</span> Interesting transformers</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Sentence-T5 <a href="https://arxiv.org/pdf/2108.08877.pdf">https://arxiv.org/pdf/2108.08877.pdf</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgfaecb8c" class="outline-3">
+<h3 id="orgfaecb8c"><span class="section-number-3">1.2.</span> How to run GPT et c</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #ffffff;">from</span> transformers <span style="color: #ffffff;">import</span> GPT2LMHeadModel
+<span style="color: #ffffff;">from</span> transformers <span style="color: #ffffff;">import</span> GPT2Tokenizer
+
+<span style="color: #9acd32;">model</span> = GPT2LMHeadModel.from_pretrained<span style="color: #8c8c8c;">(</span><span style="color: #bdb76b;">"gpt2"</span><span style="color: #8c8c8c;">)</span>.cuda<span style="color: #8c8c8c;">()</span>
+<span style="color: #9acd32;">tokenizer</span> = GPT2Tokenizer.from_pretrained<span style="color: #8c8c8c;">(</span><span style="color: #bdb76b;">"gpt2"</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #9acd32;">prompt</span> = <span style="color: #bdb76b;">"The difference between baroque and renaissance art according to art historians is"</span>
+<span style="color: #9acd32;">input_ids</span> = tokenizer.encode<span style="color: #8c8c8c;">(</span>prompt, return_tensors=<span style="color: #bdb76b;">'pt'</span><span style="color: #8c8c8c;">)</span>.to<span style="color: #8c8c8c;">(</span>model.device<span style="color: #8c8c8c;">)</span>
+<span style="color: #9acd32;">generated_text_samples_ids</span> = model.generate<span style="color: #8c8c8c;">(</span>
+    input_ids, 
+    max_length=<span style="color: #40e0d0;">64</span>,  
+    num_return_sequences=<span style="color: #40e0d0;">5</span>,
+    num_beams=<span style="color: #40e0d0;">10</span>,
+    do_sample=<span style="color: #40e0d0;">True</span>,
+    no_repeat_ngram_size=<span style="color: #40e0d0;">2</span>,
+<span style="color: #8c8c8c;">)</span>
+<span style="color: #9acd32;">generated_text_samples</span> = <span style="color: #b0c4de;">list</span><span style="color: #8c8c8c;">(</span>tokenizer.batch_decode<span style="color: #93a8c6;">(</span>generated_text_samples_ids<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #ffffff;">for</span> generated_text <span style="color: #ffffff;">in</span> generated_text_samples:
+    <span style="color: #ffffff;">print</span><span style="color: #8c8c8c;">(</span><span style="color: #bdb76b;">"GENERATED TEXT:"</span><span style="color: #8c8c8c;">)</span>
+    <span style="color: #ffffff;">print</span><span style="color: #8c8c8c;">(</span>generated_text.replace<span style="color: #93a8c6;">(</span><span style="color: #bdb76b;">"\n"</span>, <span style="color: #bdb76b;">" "</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+    <span style="color: #ffffff;">print</span><span style="color: #8c8c8c;">(</span><span style="color: #bdb76b;">""</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+
+<pre class="example" id="org193a1eb">
+Setting `pad_token_id` to `eos_token_id`:50256 for open-end generation.
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that it is a form of art that has been around for a long time.  Baroques and Renaissance art are not the same thing. They are two different things, both of which have their roots in the late 19th century. Bar
+
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that the Renaissance was a period in which the art of painting, sculpture, and sculpture were becoming more and more popular.  In the 19th and early 20th centuries, there were two major trends in art: the rise and fall of the
+
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that the Renaissance was a time when the art of painting was becoming more and more popular.  In the 19th century, there were two main styles of art: painting and sculpture. Painting was the most popular form of artistic expression, while sculpture
+
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that Renaissance art is more of a work of art than it is of architecture.  In the 17th century, the city of Barcelona was one of the most important centers of artistic expression in the world. It was home to many famous artists,
+
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that in the early 19th century, the art of Renaissance art was in decline. In the 20th and 21st centuries, however, it was gaining strength.  In the 1920s and 1930s, there was a revival of art in
+</pre>
+
+<p>
+GPT Neo
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #ffffff;">from</span> transformers <span style="color: #ffffff;">import</span> GPTNeoForCausalLM, GPT2Tokenizer
+<span style="color: #9acd32;">model_name</span> = <span style="color: #bdb76b;">"EleutherAI/gpt-neo-2.7B"</span>
+<span style="color: #9acd32;">model</span> = GPTNeoForCausalLM.from_pretrained<span style="color: #8c8c8c;">(</span>model_name<span style="color: #8c8c8c;">)</span>.cuda<span style="color: #8c8c8c;">()</span>
+<span style="color: #9acd32;">tokenizer</span> = GPT2Tokenizer.from_pretrained<span style="color: #8c8c8c;">(</span>model_name<span style="color: #8c8c8c;">)</span>
+
+<span style="color: #9acd32;">prompt</span> = <span style="color: #bdb76b;">"The difference between baroque and renaissance art according to art historians is"</span>
+<span style="color: #9acd32;">input_ids</span> = tokenizer.encode<span style="color: #8c8c8c;">(</span>prompt, return_tensors=<span style="color: #bdb76b;">'pt'</span><span style="color: #8c8c8c;">)</span>.to<span style="color: #8c8c8c;">(</span>model.device<span style="color: #8c8c8c;">)</span>
+<span style="color: #9acd32;">generated_text_samples_ids</span> = model.generate<span style="color: #8c8c8c;">(</span>
+    input_ids, 
+    max_length=<span style="color: #40e0d0;">64</span>,  
+    num_return_sequences=<span style="color: #40e0d0;">5</span>,
+    num_beams=<span style="color: #40e0d0;">10</span>,
+    do_sample=<span style="color: #40e0d0;">True</span>,
+    no_repeat_ngram_size=<span style="color: #40e0d0;">2</span>,
+<span style="color: #8c8c8c;">)</span>
+<span style="color: #9acd32;">generated_text_samples</span> = <span style="color: #b0c4de;">list</span><span style="color: #8c8c8c;">(</span>tokenizer.batch_decode<span style="color: #93a8c6;">(</span>generated_text_samples_ids<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #ffffff;">for</span> generated_text <span style="color: #ffffff;">in</span> generated_text_samples:
+    <span style="color: #ffffff;">print</span><span style="color: #8c8c8c;">(</span><span style="color: #bdb76b;">"GENERATED TEXT:"</span><span style="color: #8c8c8c;">)</span>
+    <span style="color: #ffffff;">print</span><span style="color: #8c8c8c;">(</span>generated_text.replace<span style="color: #93a8c6;">(</span><span style="color: #bdb76b;">"\n"</span>, <span style="color: #bdb76b;">" "</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+    <span style="color: #ffffff;">print</span><span style="color: #8c8c8c;">(</span><span style="color: #bdb76b;">""</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+
+
+
+<pre class="example" id="org9a5e901">
+Setting `pad_token_id` to `eos_token_id`:50256 for open-end generation.
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that the former is a style of art that emerged in the sixteenth and seventeenth centuries, while the latter is an art style that has been around since the time of the ancient Greeks and Romans.  The Renaissance is generally considered to have begun
+
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that the former is a product of the Enlightenment, while the latter is the result of a counter-Enlightenment.  In other words, Renaissance art was a reaction against the excesses of modernity, and it sought to return to the
+
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that the former is the art of the people, while the latter is art for the elite. This is not to say that Renaissance art was not beautiful, but rather that it was intended to be beautiful for a select few.  For example,
+
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that the former is a product of the Middle Ages, while the latter is based on the Renaissance.  The Renaissance was a period in the history of Western art that lasted from the 15th to the 17th century. It was marked by the
+
+GENERATED TEXT:
+The difference between baroque and renaissance art according to art historians is that the former is a product of the Middle Ages, while the latter is an outgrowth of modernity.  In other words, there is no such thing as a “rebirth of art” in the sense of a return to
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org2e0947b" class="outline-3">
+<h3 id="org2e0947b"><span class="section-number-3">1.3.</span> Vision + text models</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Simple interfaces
+</p>
+</div>
+<div id="outline-container-org1ca1c3e" class="outline-4">
+<h4 id="org1ca1c3e"><span class="section-number-4">1.3.1.</span> CLIP - huggingface + sentence transformers</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<pre class="example" id="orgbd9cc97">
+from sentence_transformers import SentenceTransformer
+model = SentenceTransformer("clip-ViT-B-16")
+
+# model.encode works just like for texts but with PIL images
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9b7b3f0" class="outline-2">
+<h2 id="org9b7b3f0"><span class="section-number-2">2.</span> IR</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #ffffff;">import</span> pytrec_eval
+<span style="color: #ffffff;">import</span> json
+
+<span style="color: #9acd32;">qrel</span> = <span style="color: #8c8c8c;">{</span>
+    <span style="color: #bdb76b;">'q1'</span>: <span style="color: #93a8c6;">{</span>
+        <span style="color: #bdb76b;">'d1'</span>: <span style="color: #40e0d0;">0</span>,
+        <span style="color: #bdb76b;">'d2'</span>: <span style="color: #40e0d0;">1</span>,
+        <span style="color: #bdb76b;">'d3'</span>: <span style="color: #40e0d0;">0</span>,
+    <span style="color: #93a8c6;">}</span>,
+    <span style="color: #bdb76b;">'q2'</span>: <span style="color: #93a8c6;">{</span>
+        <span style="color: #bdb76b;">'d2'</span>: <span style="color: #40e0d0;">1</span>,
+        <span style="color: #bdb76b;">'d3'</span>: <span style="color: #40e0d0;">1</span>,
+    <span style="color: #93a8c6;">}</span>,
+<span style="color: #8c8c8c;">}</span>
+
+<span style="color: #9acd32;">run</span> = <span style="color: #8c8c8c;">{</span>
+    <span style="color: #bdb76b;">'q1'</span>: <span style="color: #93a8c6;">{</span>
+        <span style="color: #bdb76b;">'d1'</span>: <span style="color: #40e0d0;">1</span>.<span style="color: #40e0d0;">0</span>,
+        <span style="color: #bdb76b;">'d2'</span>: <span style="color: #40e0d0;">0</span>.<span style="color: #40e0d0;">0</span>,
+        <span style="color: #bdb76b;">'d3'</span>: <span style="color: #40e0d0;">1</span>.<span style="color: #40e0d0;">5</span>,
+    <span style="color: #93a8c6;">}</span>,
+    <span style="color: #bdb76b;">'q2'</span>: <span style="color: #93a8c6;">{</span>
+        <span style="color: #bdb76b;">'d1'</span>: <span style="color: #40e0d0;">1</span>.<span style="color: #40e0d0;">5</span>,
+        <span style="color: #bdb76b;">'d2'</span>: <span style="color: #40e0d0;">0</span>.<span style="color: #40e0d0;">2</span>,
+        <span style="color: #bdb76b;">'d3'</span>: <span style="color: #40e0d0;">0</span>.<span style="color: #40e0d0;">5</span>,
+    <span style="color: #93a8c6;">}</span>
+<span style="color: #8c8c8c;">}</span>
+
+<span style="color: #9acd32;">evaluator</span> = pytrec_eval.RelevanceEvaluator<span style="color: #8c8c8c;">(</span>
+    qrel, <span style="color: #93a8c6;">{</span><span style="color: #bdb76b;">'map'</span>, <span style="color: #bdb76b;">'ndcg'</span><span style="color: #93a8c6;">}</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #ffffff;">print</span><span style="color: #8c8c8c;">(</span>json.dumps<span style="color: #93a8c6;">(</span>evaluator.evaluate<span style="color: #b0b1a3;">(</span>run<span style="color: #b0b1a3;">)</span>, indent=<span style="color: #40e0d0;">1</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+</pre>
+</div>
+
+<pre class="example" id="org72620a8">
+{
+ "q1": {
+  "map": 0.3333333333333333,
+  "ndcg": 0.5
+ },
+ "q2": {
+  "map": 0.5833333333333333,
+  "ndcg": 0.6934264036172708
+ }
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgee51c7e" class="outline-2">
+<h2 id="orgee51c7e"><span class="section-number-2">3.</span> Tooling</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org776fb3d" class="outline-3">
+<h3 id="org776fb3d"><span class="section-number-3">3.1.</span> Ploomber</h3>
+<div class="outline-text-3" id="text-3-1">
+</div>
+<div id="outline-container-orgbc347f5" class="outline-4">
+<h4 id="orgbc347f5"><span class="section-number-4">3.1.1.</span> Resources</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+<a href="https://ploomber.io/posts/survey/">Open-source Workflow Management Tools: A Survey</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc1c308b" class="outline-4">
+<h4 id="orgc1c308b"><span class="section-number-4">3.1.2.</span> Basics</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+Config in pipeline.yaml
+</p>
+
+<p>
+tasks/tasks1.py contains functions 
+</p>
+<pre class="example" id="orgff7ef4f">
+def subtask1(product, upstream):
+  ...
+  out.to_csv(str(product))
+</pre>
+
+<pre class="example" id="org1f47e80">
+tasks:
+   - source: tasks.task1.subtask1
+     product: # this can be either one value which is a string, path to output
+       output: task1_out.csv 
+       nb: products/report1.ipynb # we can also output file run as executed output
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org695d79c" class="outline-4">
+<h4 id="org695d79c"><span class="section-number-4">3.1.3.</span> Hyperparameters</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<pre class="example" id="org3aed18b">
+tasks:
+   - source: tasks.model.fit
+     product: ...
+     grid:
+       - model:
+         sklearn.ensemble.RandomForestClassifier
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5722d96" class="outline-4">
+<h4 id="org5722d96"><span class="section-number-4">3.1.4.</span> Partial run</h4>
+<div class="outline-text-4" id="text-3-1-4">
+<p>
+ploomber build &#x2013;partially "&lt;TASK<sub>NAME</sub>&gt;" &#x2013;skip-upstream
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgcfc3d95" class="outline-3">
+<h3 id="orgcfc3d95"><span class="section-number-3">3.2.</span> Elasticsearch</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+#+BEGIN<sub>SRC</sub> python :results output  :exports both
+import elasticsearch
+</p>
+
+<p>
+client = elasticsearch.Elasticsearch()
+client.indices.get<sub>alias</sub>()
+#+END<sub>EXAMPLE</sub>
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org1719168" class="outline-2">
+<h2 id="org1719168"><span class="section-number-2">4.</span> Physics</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="https://www.quantamagazine.org/beyond-the-second-law-of-thermodynamics-20220331/">https://www.quantamagazine.org/beyond-the-second-law-of-thermodynamics-20220331/</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: kuba</p>
+<p class="date">Created: 2022-06-05 nie 22:38</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
