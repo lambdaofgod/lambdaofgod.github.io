@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-06-16 czw 12:23 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="author" content="kuba" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgca76ec7">1. Projekty</a>
+<ul>
+<li><a href="#orga5421e0">1.1. Wyszukiwanie</a></li>
+<li><a href="#org74fdddc">1.2. Rekomendacje</a></li>
+<li><a href="#org37065ee">1.3. Finanse</a></li>
+<li><a href="#orge29aae4">1.4. Wizja</a></li>
+<li><a href="#orgab2cf24">1.5. Biblioteki MLowe</a></li>
+<li><a href="#org5fb35aa">1.6. Testowanie</a></li>
+<li><a href="#org2c9fd56">1.7. Inne</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgca76ec7" class="outline-2">
+<h2 id="orgca76ec7"><span class="section-number-2">1.</span> Projekty</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Ilość haszów - poziom trudności/skomplikowania.
+</p>
+
+<p>
+Tam gdzie jest wpisane "sama apka" znaczy to że już jest zrobione coś co można najpierw zamienić w interaktywne demo, a potem zastanowić się nad rozwijaniem
+</p>
+</div>
+
+<div id="outline-container-orga5421e0" class="outline-3">
+<h3 id="orga5421e0"><span class="section-number-3">1.1.</span> Wyszukiwanie</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>(##) repo na githubie - proste information extraction typu wersje tensorflow, torcha czy CUDA</li>
+
+<li>(###) kanały YT <a href="https://snap.stanford.edu/class/cs224w-2015/projects_2015/Analysis_of_the_YouTube_Channel_Recommendation_Network.pdf">prosta pracka</a></li>
+
+<li>(###/#####) <b><b>system zakładek</b></b>
+Zrobić system który będzie dodawał zakładki do książek/pdfów
+Pomysł jest taki żeby linkować artykuły do książek, tak że potem ktoś komu udostępniło się książkę może skorzystać.
+Np czytamy książkę o Czyngis Chanie i system znajduje w historii że czytaliśmy artykuł o tym.
+W przypadku PDFów może to też działać w 2 stronę, np mamy w bibliotece pewną książkę i kiedy czytamy artykuł to sugeruje nam że jest on związany z jakąś książką.</li>
+
+<li>(##) <b><b>organizacja biblioteki PDFów</b></b> - na początek styknie zrobić jakiś interfejs # bazę do kodu z <a href="https://github.com/lambdaofgod/examples-counterexamples/blob/master/notebooks/text_mining/Topic%20Modeling%20for%20PDF%20Mining.ipynb">tego notebooka</a></li>
+</ul>
+</div>
+<ol class="org-ol">
+<li><a id="org04c02e9"></a>co trzebaby zrobić<br />
+<div class="outline-text-6" id="text-1-1-0-0-1">
+<ul class="org-ul">
+<li>ogarnąć frontend (na początek streamlit styknie)</li>
+<li>ogarnąć bazę do zachowania metadanych</li>
+<li>(opcjonalnie) ogarnąć Elastiscearcha albo coś podobnego (w Pythonie jest Whoosh) do zapisania dokumentów i późniejszego łatwego wyszukiwania</li>
+<li>(ambitniej) ogarnąć jakieś mądrzejsze modele do wyszukiwania tekstu</li>
+<li>(ambitniej) ogarnąć inne zadania typu Question Answering</li>
+</ul>
+<ul class="org-ul">
+<li>(###) <b><b>wyszukiwanie i rekomendacje kursów</b></b> od jakiegoś czasu wkurwia mnie gówniane wyszukiwanie na courserze. Możnaby zrobić coś co będzie bardziej elastyczne i sprytniejsze niż ten syf który sami zrobili.</li>
+<li>(###, sama apka) <b><b>wyszukiwanie na wikipedii</b></b> - zbiór danych WikIR</li>
+<li>(##, sama apka) <a href="https:.com/lambdaofgod/findkit">findkit</a> - moja mała biblioteczka do wyszukiwania obrazów/dźwięku/tekstu - przerobić przykłady z notebooków na interaktywne demo</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org74fdddc" class="outline-3">
+<h3 id="org74fdddc"><span class="section-number-3">1.2.</span> Rekomendacje</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>(# do ###, sama apka) <b><b>wyszukiwanie/rekomendacje gier</b></b> -
+<ol class="org-ol">
+<li>jest otwarty zbiór danych o grach ze steama gdzie są informacje o tym ile ktoś grał w daną grę</li>
+<li>gry mają opisy z metacritica</li>
+<li>do rekomendacji <a href="https://github.com/lambdaofgod/game_recommender">(opartej na tym ile kto w coś grał) algorytm genetyczny dla optymalizacji wielu kryteriów</a>, można rozwinąć albo zastosować do innych danych</li>
+</ol></li>
+<li>(###, sama apka) <b><b>wyszukiwanie/rekomendacje repo Pythona</b></b> na githubie (potem można dodać inne języki) - MAM GOTOWE MODELE, tylko trzebaby to jakoś ładnie opakować
+<ul class="org-ul">
+<li>analiza i klastrowanie gwiazdkowanych repo - wiem że to się da zrobić bo już <a href="https://github.com/lambdaofgod/examples-counterexamples/blob/master/notebooks/text_mining/Github_Starred_Repositories.ipynb">miałem jeden projekt</a></li>
+<li>znajdowanie podobnych repo - mam model który może służyć do oceny podobieństwa</li>
+</ul></li>
+<li>(##) <b><b>wyszukiwanie/rekomendacje książek</b></b> - problem ze zbiorem danych, nie wiadomo jak z dostępem</li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-org37065ee" class="outline-3">
+<h3 id="org37065ee"><span class="section-number-3">1.3.</span> Finanse</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>(#) <b><b>prosta agregacja przydatnych danych finansowych</b></b>, na początek
+<ul class="org-ul">
+<li>SPY</li>
+<li>QQQ</li>
+<li>VIX</li>
+<li>Q Tobina</li>
+</ul></li>
+<li>(##) prosta apka do znajdowania firm w które potencjalnie dobrze zainwestować, to da się zrobić korzystając z Yahoo Finance w Pythonie</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge29aae4" class="outline-3">
+<h3 id="orge29aae4"><span class="section-number-3">1.4.</span> Wizja</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>(ML, ####) aplikacja do generowania obrazków z tekstu z optymalizacją (generujemy coś co coraz bardziej wygląda jak to co chcemy wygenerować, tzn zmieniamy tekst wejściowy)</li>
+<li>(ML, apka, #####) aplikacja do nauki sztuk walki i ćwiczeń (może być też taniec). Użyć analizy video do sprawdzenia czy ruchy są poprawnie wykonywane. W pierwszej iteracji można zrobić porównywanie video czy te same ćwiczenia wykonywane w zwolnionym i normalnym tempie są faktycznie zgodne.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgab2cf24" class="outline-3">
+<h3 id="orgab2cf24"><span class="section-number-3">1.5.</span> Biblioteki MLowe</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>(ML###) <b><b>biblioteka Pythonowa do zero-shot learningu</b></b>. Zrobiłem w miarę rozsądne API, podpiąłem parę zbiorów danych i zaimplementowałem 2 algorytmy z kilkunastu z <a href="https://arxiv.org/abs/1703.04394).%20To%20b%C4%99dzie%20ju%C5%BC%20typowe%20d%C5%82ubanie%20w%20algorytmach%20MLowych,%20trudne%20ale%20satysfakcjonuj%C4%85ce.%20Dodatkowo%20okazja%20%C5%BCeby%20nauczy%C4%87%20si%C4%99%20nowego%20frameworka%20do%20sieci%20neuronowych%20(ja%20preferowa%C5%82bym%20Jaxa">Zero-Shot Learning &#x2013; The Good, the Bad and the Ugly</a></li>
+<li>(ML#####) <b><b>topologiczna analiza danych</b></b>.  Musiałbym pokminić do czego to się może przydać, na pewno znajdzie się coś interesującego typu badanie podobieństwa rozkładów. Na początek można zrobić to co się dzieje w <a href="https://github.com/lambdaofgod/tda-project">tym repo w Scali</a> w Pythonie.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5fb35aa" class="outline-3">
+<h3 id="org5fb35aa"><span class="section-number-3">1.6.</span> Testowanie</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li>[##] findkit - możnaby dopisać testy, dodatkowe przykłady</li>
+<li>[#] github wordcloud - przykłady</li>
+<li>[###] <a href="https:.com/lambdaofgod/mlutil">mlutil</a> - mała biblioteka około machine learningu, przydałyby się testy, myślę że jest to do ogarnięcia bez znajomości MLa</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2c9fd56" class="outline-3">
+<h3 id="org2c9fd56"><span class="section-number-3">1.7.</span> Inne</h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li>(#####) ogarnięcie biblioteki/frameworka do organizacji danych hierarchicznych</li>
+</ul>
+<p>
+Hierarchiczne cechy??? <a href="https://www.cs.toronto.edu/~rsalakhu/papers/HD_PAMI.pdf">stara pracka</a>
+Jak to w zmapować na haystacka/weaviate?
+Przykłady
+</p>
+<ul class="org-ul">
+<li>dane YT - kanał ma video które mają tytuły</li>
+<li>dane o projektach machine learningowych</li>
+</ul>
+<ul class="org-ul">
+<li>(## albo ####) <b><b>OCR paragonów</b></b>. Samo ogarnięcie jakiegoś podstawowego rozwiązania będzie proste, ale z OCRem diabeł tkwi w szczegółach. Poza tym ogarnięcie żeby rozwiązanie hulało na androidzie to jeszcze wyższy poziom jazdy, ja (Kuba) nie orientuję się w  temacie więc nie jestem w stanie stwierdzić na ile to będzie skomplikowane</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: kuba</p>
+<p class="date">Created: 2022-06-16 czw 12:23</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
